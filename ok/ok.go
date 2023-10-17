@@ -31,6 +31,8 @@ func (v *Validation) Add(t TestFunc) *Validation {
 	last := (*v)[len(*v)-1]
 	// fmt.Println("add before:", len(last.tests))
 	last.tests = append(last.tests, t)
+	// TODO: Consider checling for conflicting duplicates when adding tests
+
 	// fmt.Println("adding test to", last.msg)
 	// fmt.Println("add after:", len(last.tests))
 	return v
@@ -139,10 +141,52 @@ func Contains(str string) TestFunc {
 	}
 }
 
+func EndsWith(str string) TestFunc {
+	return func(a any) bool {
+		switch a := a.(type) {
+		case string:
+			return strings.HasSuffix(a, str)
+		case []byte:
+			return bytes.HasSuffix(a, []byte(str))
+		default:
+			return false
+		}
+	}
+}
+
 // Not makes sure the given string does not exist in value
 func Not(str string) TestFunc {
-	contains := Contains(str)
 	return func(a any) bool {
-		return !contains(a)
+		return !Contains(str)(a)
+	}
+}
+
+func Min(min int) TestFunc {
+	return func(a any) bool {
+		switch a := a.(type) {
+		case string:
+			return (min <= len(a))
+		case []byte:
+			return (min <= len(a))
+		case int:
+			return (min <= a)
+		default:
+			return false	
+		}
+	}
+}
+
+func Max(max int) TestFunc {
+	return func(a any) bool {
+		switch a := a.(type) {
+		case string:
+			return (len(a) <= max)
+		case []byte:
+			return (len(a) <= max)
+		case int:
+			return (a <= max)
+		default:
+			return false	
+		}
 	}
 }
