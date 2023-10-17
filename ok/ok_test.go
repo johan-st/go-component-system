@@ -132,7 +132,7 @@ func TestMinMaxBytes(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			data := varOfLen(tt.lenData)
-			if got := ok.MinMax(tt.min, tt.max)(data); got != tt.want {
+			if got := ok.MinMaxBytes(tt.min, tt.max)(data); got != tt.want {
 				t.Errorf("MinMaxBytes(%d, %d)(<%d bytes>) = %v, want %v", tt.min, tt.max, tt.lenData, got, tt.want)
 			}
 		})

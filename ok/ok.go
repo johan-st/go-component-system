@@ -171,7 +171,7 @@ func Min(min int) TestFunc {
 		case int:
 			return (min <= a)
 		default:
-			return false	
+			return false
 		}
 	}
 }
@@ -186,7 +186,19 @@ func Max(max int) TestFunc {
 		case int:
 			return (a <= max)
 		default:
-			return false	
+			return false
+		}
+	}
+}
+
+func MinMaxBytes(min, max int) TestFunc {
+	return func(a any) bool {
+		switch a := a.(type) {
+		case []byte:
+			return (min <= len(a) && len(a) <= max)
+		default:
+			return false
+
 		}
 	}
 }
