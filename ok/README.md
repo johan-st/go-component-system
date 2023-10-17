@@ -5,7 +5,7 @@ is a validator
 
 ### validating an email
 
-#### with `Ok`
+#### with `myValidator.Ok("sam@jst.dev")`
 ```
 Validation error:
     GOT: "sam@jst.dev"
@@ -16,7 +16,7 @@ Validation error:
        is not mom
 ```
 
-#### with `OkAll`
+#### with `myValidator.OkAll("sam@jst.dev")`
 ```
 Validation error:
     GOT: "sam@jst.dev"
